@@ -27,14 +27,14 @@ class ItemShop extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               )),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Text(
             '${product.name}',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontWeight: FontWeight.w600),
+            style: const TextStyle(fontWeight: FontWeight.w600),
           ),
           Text(
             '${context.currency()}${product.price}${product.category.toString().replaceAll('Category', '')}',

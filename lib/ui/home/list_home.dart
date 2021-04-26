@@ -7,11 +7,11 @@ import 'package:shrine_clone/model/product.dart';
 import 'item_shop.dart';
 
 class ListProductPage extends StatelessWidget {
-  static const double marginItemDefault = 14.0;
+  static const double _marginItemDefault = 14.0;
 
   @override
   Widget build(BuildContext context) {
-    int size = context.select<HomeModel, int>((model) {
+    context.select<HomeModel, int>((model) {
       return model.getCurrentProducts().length;
     });
 
@@ -19,13 +19,13 @@ class ListProductPage extends StatelessWidget {
     List<Product> listProducts = homeModel.getCurrentProducts();
 
     return StaggeredGridView.countBuilder(
-        padding: const EdgeInsets.all(marginItemDefault),
+        padding: const EdgeInsets.all(_marginItemDefault),
         physics: const AlwaysScrollableScrollPhysics(
             parent: const BouncingScrollPhysics()),
         crossAxisCount: 2,
         itemCount: listProducts.length,
-        crossAxisSpacing: marginItemDefault,
-        mainAxisSpacing: marginItemDefault * 1.5,
+        crossAxisSpacing: _marginItemDefault,
+        mainAxisSpacing: _marginItemDefault * 1.5,
         itemBuilder: (context, index) {
           Product product = listProducts[index];
           return ItemShop(product: product);

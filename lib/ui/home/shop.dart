@@ -7,6 +7,7 @@ import 'package:shrine_clone/ui/home/drawer_menu.dart';
 import 'package:shrine_clone/ui/home/list_home.dart';
 import 'package:shrine_clone/utils/extension.dart';
 import 'package:shrine_clone/utils/theme.dart';
+import 'thumb_cart.dart';
 
 class ShopPage extends StatelessWidget {
   void _setupForSystemView(BuildContext context) {
@@ -32,7 +33,7 @@ class ShopPage extends StatelessWidget {
         brightness: Brightness.dark,
         title: const Text('Shop'),
       ),
-      body: ListProductPage(),
+      body: HomePage(),
       drawer: DrawerPage(),
     );
 
@@ -52,6 +53,19 @@ class ShopPage extends StatelessWidget {
             })
       ],
       child: child,
+    );
+  }
+}
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.bottomRight,
+      children: [
+        ListProductPage(),
+        ThumbCart(),
+      ],
     );
   }
 }

@@ -13,22 +13,19 @@ class DrawerPage extends StatelessWidget {
     });
 
     return Drawer(
-        child: Container(
-      child: ListView(
-        padding: EdgeInsets.only(top: 50),
-        children: [
-          _buildMenu(context, Icons.ac_unit, "All", category: Category.all),
-          _buildMenu(context, Icons.hot_tub, "Summer",
-              category: Category.summer),
-          _buildMenu(context, Icons.short_text, "Short",
-              category: Category.short),
-          _buildMenu(context, Icons.api, "Hat", category: Category.hat),
-          Divider(
-            height: 30,
-          ),
-          _buildMenu(context, Icons.logout, "Logout"),
-        ],
-      ),
+        child: ListView(
+      padding: const EdgeInsets.only(top: 50),
+      children: [
+        _buildMenu(context, Icons.ac_unit, "All", category: Category.all),
+        _buildMenu(context, Icons.hot_tub, "Summer", category: Category.summer),
+        _buildMenu(context, Icons.short_text, "Short",
+            category: Category.short),
+        _buildMenu(context, Icons.api, "Hat", category: Category.hat),
+        const Divider(
+          height: 30,
+        ),
+        _buildMenu(context, Icons.logout, "Logout"),
+      ],
     ));
   }
 
@@ -42,7 +39,6 @@ class DrawerPage extends StatelessWidget {
       {Category? category}) {
     Category currentCategory =
         Provider.of<HomeModel>(context, listen: false).currentCategory;
-    bool isLogoutItem = category == null;
     return ListTile(
       leading: Icon(icon),
       selected: currentCategory == category,

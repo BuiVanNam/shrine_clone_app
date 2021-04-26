@@ -5,6 +5,7 @@ const kPrimaryColor = Color(0xFF283593);
 const kPrimaryRippleColor = Color(0x32283593);
 const kAccentColor = Color(0xFF283593);
 const kErrorRedColor = Color(0xFFC5032B);
+const kColorBgThumbCart = Color(0xFF3f51b5);
 
 const kBackgroundColorLight = Colors.white;
 const kBackgroundColorDark = Color(0xD7000000);
