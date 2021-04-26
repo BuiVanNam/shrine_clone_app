@@ -1,31 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:shrine_clone/ui/home/shop.dart';
 import 'package:shrine_clone/ui/login/login.dart';
+import 'package:shrine_clone/utils/shared_preferences.dart';
 import 'package:shrine_clone/utils/theme.dart';
 
 const String routerLogin = '/login';
 const String routerHomeShop = '/home_shop';
 
-void main() {
-  runApp(MyApp());
-}
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final isLogin = false;
-    String routerHome = isLogin ? routerHomeShop : routerLogin;
+  final isLogin = await LoginUtils.isLogin();
+  String routerHome = isLogin ? routerHomeShop : routerLogin;
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: kThemeLight,
-      darkTheme: kThemeDark,
-      initialRoute: routerHome,
-      routes: {
-        routerLogin: (context) => LoginPage(),
-        routerHomeShop: (context) => ShopPage(),
-      },
-    );
-  }
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    title: 'Flutter Demo',
+    theme: kThemeLight,
+    darkTheme: kThemeDark,
+    initialRoute: routerHome,
+    routes: {
+      routerLogin: (context) => LoginPage(),
+      routerHomeShop: (context) => ShopPage(),
+    },
+  ));
 }

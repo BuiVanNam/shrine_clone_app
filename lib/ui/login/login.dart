@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shrine_clone/main.dart';
 import 'package:shrine_clone/utils/extension.dart';
+import 'package:shrine_clone/utils/shared_preferences.dart';
 import 'package:shrine_clone/utils/theme.dart';
 
 class LoginPage extends StatefulWidget {
@@ -40,6 +41,12 @@ class _LoginPageState extends State<LoginPage> {
         _isEnableNext = newStateEnable;
       });
     }
+  }
+
+  void _actionLogin() async {
+    LoginUtils.setLogin().then((_) {
+      Navigator.pushReplacementNamed(context, routerHomeShop);
+    });
   }
 
   void _setupForSystemView(BuildContext context) {
@@ -129,7 +136,7 @@ class _LoginPageState extends State<LoginPage> {
             TextButton(
               onPressed: _isEnableNext
                   ? () {
-                      Navigator.pushReplacementNamed(context, routerHomeShop);
+                      _actionLogin();
                     }
                   : null,
               child: const Text('NEXT'),
