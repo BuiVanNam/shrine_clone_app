@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shrine_clone/model/home_model.dart';
 import 'package:shrine_clone/model/product.dart';
 import 'package:shrine_clone/utils/theme.dart';
 import 'package:shrine_clone/utils/extension.dart';
@@ -48,7 +50,9 @@ class ItemShop extends StatelessWidget {
           )
         ],
       ),
-      onTap: () {},
+      onTap: () {
+        Provider.of<HomeModel>(context, listen: false).addProductInCart(product);
+      },
     );
   }
 }

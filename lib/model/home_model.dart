@@ -13,6 +13,30 @@ class HomeModel extends foundation.ChangeNotifier {
 
   final _productInCart = <int, int>{};
 
+  Map<int, int> get productsInCart {
+    return Map.from(_productInCart);
+  }
+
+  int getTotalItemInCart() {
+    return _productInCart.values.fold(0, (previousValue, element) {
+      return previousValue + element;
+    });
+  }
+
+  void addProductInCart(Product product) {
+    int key = product.id;
+    if (_productInCart.containsKey(key)) {
+      _productInCart.update(key, (value) => value + 1);
+    } else {
+      _productInCart[key] = 1;
+    }
+    notifyListeners();
+  }
+
+  Product getProductFromKey(int key) {
+    return _listAllProduct.firstWhere((element) => element.id == key);
+  }
+
   void loadAllProduct() {
     _listAllProduct.addAll(productRepository?.listProduct ?? []);
     notifyListeners();
