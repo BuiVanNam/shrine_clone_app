@@ -31,7 +31,7 @@ class DrawerPage extends StatelessWidget {
 
   void _actionLogout(BuildContext context) async {
     LoginUtils.logout().then((_) {
-      Navigator.pushReplacementNamed(context, routerLogin);
+      Navigator.of(context, rootNavigator: true).pushReplacementNamed(routerLogin);
     });
   }
 

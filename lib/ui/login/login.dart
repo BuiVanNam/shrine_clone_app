@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
 
   void _actionLogin() async {
     LoginUtils.setLogin().then((_) {
-      Navigator.pushReplacementNamed(context, routerHomeShop);
+      Navigator.of(context, rootNavigator: true).pushReplacementNamed(routerHomeShop);
     });
   }
 
@@ -53,15 +53,16 @@ class _LoginPageState extends State<LoginPage> {
     Future.delayed(Duration(milliseconds: 1)).then((value) {
       bool darkModeOn = context.isDarkTheme();
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
-          statusBarIconBrightness:
-              darkModeOn ? Brightness.light : Brightness.dark,
-          systemNavigationBarColor:
-              darkModeOn ? kBackgroundColorDark : kBackgroundColorLight,
-          systemNavigationBarDividerColor:
-              darkModeOn ? Colors.black : Colors.white,
-          systemNavigationBarIconBrightness:
-              darkModeOn ? Brightness.light : Brightness.dark));
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness:
+            darkModeOn ? Brightness.light : Brightness.dark,
+        // systemNavigationBarColor:
+        //     darkModeOn ? kBackgroundColorDark : kBackgroundColorLight,
+        // systemNavigationBarDividerColor:
+        //     darkModeOn ? Colors.black : Colors.white,
+        // systemNavigationBarIconBrightness:
+        //     darkModeOn ? Brightness.light : Brightness.dark)
+      ));
     });
   }
 
