@@ -62,7 +62,8 @@ class _ListThumbProductState extends State<ListThumbProduct> {
         print('_diffListCart add key: $key');
         listCart.add(key);
         if (isChangeCount) {
-          _globalKeyAnimList.currentState!.insertItem(listCart.length - 1);
+          _globalKeyAnimList.currentState!.insertItem(listCart.length - 1,
+              duration: const Duration(milliseconds: 300));
         }
       } else {}
     }
@@ -85,127 +86,91 @@ class _ListThumbProductState extends State<ListThumbProduct> {
 
   @override
   Widget build(BuildContext context) {
-    // context.select<HomeModel, Map<int, int>>((value) {
-    //   return value.productsInCart;
-    // });
+    context.select<HomeModel, Map<int, int>>((value) {
+      return value.productsInCart;
+    });
+
+    _diffListCart(_sizeList() < 4);
 
     HomeModel model = Provider.of<HomeModel>(context, listen: false);
-
-    return Selector<HomeModel, Map<int, int>>(
-      builder: (context, data, child) {
-        _diffListCart(_sizeList() < 4);
-        return child!;
+    return AnimatedList(
+      key: _globalKeyAnimList,
+      padding: EdgeInsets.zero,
+      shrinkWrap: true,
+      initialItemCount: _sizeList(),
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (_, index, anim) {
+        if (index <= 2) {
+          Product product = model.getProductFromKey(listCart.elementAt(index));
+          return _buildAnimationItem(
+              child: _buildThumbProduct(
+                  product, model.productsInCart[product.id]!),
+              animation: anim);
+        } else {
+          return _buildAnimationItem(
+              child: _buildNumberOtherProduct(), animation: anim);
+        }
       },
-      child: AnimatedList(
-        key: _globalKeyAnimList,
-        padding: EdgeInsets.zero,
-        shrinkWrap: true,
-        initialItemCount: _sizeList(),
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (_, index, anim) {
-          if (index <= 2) {
-            Product product =
-                model.getProductFromKey(listCart.elementAt(index));
-            return _buildSizeTransition(anim, index);
-            // return _buildThumbProduct(
-            //     product, model.productsInCart[product.id]!, anim);
-          } else {
-            return Center(
-                child: Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              child: Text(
-                '+${listCart.length - _maxItemThumb}',
-                maxLines: 1,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                    fontSize: 14),
-              ),
-            ));
-          }
-        },
-      ),
-      selector: (buildContext, model) => model.productsInCart,
-    );
-
-    // return AnimatedList(
-    //   key: _globalKeyAnimList,
-    //   padding: EdgeInsets.zero,
-    //   shrinkWrap: true,
-    //   initialItemCount: _sizeList(),
-    //   scrollDirection: Axis.horizontal,
-    //   itemBuilder: (_, index, anim) {
-    //     if (index <= 2) {
-    //       Product product = model.getProductFromKey(listCart.elementAt(index));
-    //       return _buildSizeTransition(anim, index);
-    //       // return _buildThumbProduct(
-    //       //     product, model.productsInCart[product.id]!, anim);
-    //     } else {
-    //       return Center(
-    //           child: Padding(
-    //         padding: const EdgeInsets.only(left: 10, right: 10),
-    //         child: Text(
-    //           '+${listCart.length - _maxItemThumb}',
-    //           maxLines: 1,
-    //           textAlign: TextAlign.center,
-    //           overflow: TextOverflow.ellipsis,
-    //           style: const TextStyle(
-    //               fontWeight: FontWeight.w600,
-    //               color: Colors.white,
-    //               fontSize: 14),
-    //         ),
-    //       ));
-    //     }
-    //   },
-    // );
-  }
-
-  SizeTransition _buildSizeTransition(Animation<double> animation, int index) {
-    return SizeTransition(
-      sizeFactor: animation,
-      child: Card(
-        child: Text(
-          '${index}',
-          style: TextStyle(color: Colors.black87),
-        ),
-        color: Colors.white,
-      ),
     );
   }
 
-  Widget _buildThumbProduct(
-      Product product, int size, Animation<double> animation) {
-    return SizeTransition(
-      sizeFactor: animation,
-      child: Padding(
-          padding: const EdgeInsets.all(_marginItemProduct),
-          child: Column(
-            children: [
-              Expanded(
-                  child: AspectRatio(
-                aspectRatio: 1,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.asset(
-                    product.assetName,
-                    package: Product.packageAsset,
-                    fit: BoxFit.cover,
-                  ),
+  Widget _buildAnimationItem(
+      {required Widget child, required Animation<double> animation}) {
+    Animation<double> animationFinal = animation.drive(
+        Tween(begin: 0.0, end: 1.0)
+            .chain(CurveTween(curve: Curves.easeInOutQuart)));
+    return FadeTransition(
+        opacity: animationFinal,
+        child: SizeTransition(
+          sizeFactor: animationFinal,
+          axis: Axis.horizontal,
+          axisAlignment: -1.0,
+          child: ScaleTransition(scale: animationFinal, child: child),
+        ));
+  }
+
+  Widget _buildNumberOtherProduct() {
+    return Center(
+        child: Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10),
+      child: Text(
+        '+${listCart.length - _maxItemThumb}',
+        maxLines: 1,
+        textAlign: TextAlign.center,
+        overflow: TextOverflow.ellipsis,
+        style: const TextStyle(
+            fontWeight: FontWeight.w600, color: Colors.white, fontSize: 14),
+      ),
+    ));
+  }
+
+  Widget _buildThumbProduct(Product product, int size) {
+    return Padding(
+        padding: const EdgeInsets.all(_marginItemProduct),
+        child: Column(
+          children: [
+            Expanded(
+                child: AspectRatio(
+              aspectRatio: 1,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(
+                  product.assetName,
+                  package: Product.packageAsset,
+                  fit: BoxFit.cover,
                 ),
-              )),
-              Text(
-                'x$size',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                    fontWeight: FontWeight.w300,
-                    color: Colors.white,
-                    fontSize: 9),
               ),
-            ],
-          )),
-    );
+            )),
+            Text(
+              'x$size',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                  fontWeight: FontWeight.w300,
+                  color: Colors.white,
+                  fontSize: 9),
+            ),
+          ],
+        ));
   }
 }
