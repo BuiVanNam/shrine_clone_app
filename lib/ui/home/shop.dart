@@ -95,6 +95,15 @@ class _ShopPageState extends State<ShopPage> {
   }
 }
 
+//TODO: check dark theme
+bool _darkModeEnabled = false;
+void _checkIfDarkModeEnabled(BuildContext context) {
+  final ThemeData theme = Theme.of(context);
+  theme.brightness == Brightness.dark
+      ? _darkModeEnabled = true
+      : _darkModeEnabled = false;
+}
+
 class HomeListProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

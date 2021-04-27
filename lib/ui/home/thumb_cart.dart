@@ -54,7 +54,6 @@ class _ListThumbProductState extends State<ListThumbProduct> {
 
     final dif = listProductInCartModel.difference(listCart);
     if (dif.isEmpty) {
-      print('_diffListCart return');
       return;
     }
 
