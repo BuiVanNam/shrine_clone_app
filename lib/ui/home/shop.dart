@@ -23,23 +23,8 @@ class ShopPage extends StatefulWidget {
 class _ShopPageState extends State<ShopPage> {
   final _navigatorKey = GlobalKey<NavigatorState>();
 
-  void _setupForSystemView(BuildContext context) {
-    Future.delayed(Duration(milliseconds: 1)).then((value) {
-      bool darkModeOn = context.isDarkTheme();
-      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
-          systemNavigationBarColor:
-              darkModeOn ? kBackgroundColorDark : kBackgroundColorLight,
-          systemNavigationBarDividerColor:
-              darkModeOn ? Colors.black : Colors.white,
-          systemNavigationBarIconBrightness:
-              darkModeOn ? Brightness.light : Brightness.dark));
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    // _setupForSystemView(context);
 
     return MultiProvider(
       providers: [

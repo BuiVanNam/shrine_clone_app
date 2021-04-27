@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const kPrimaryColor = Color(0xFF283593);
@@ -15,6 +16,26 @@ const kPrimaryTextColorDark = Colors.white;
 
 const kSecondaryTextColorLight = Color(0xFF757575);
 const kSecondaryTextColorDark = Colors.white60;
+
+
+//TODO: use with: AnnotatedRegion<SystemUiOverlayStyle>
+const SystemUiOverlayStyle lightSystemUi = SystemUiOverlayStyle(
+  systemNavigationBarColor: kBackgroundColorLight,
+  systemNavigationBarDividerColor: Colors.white,
+  systemNavigationBarIconBrightness: Brightness.dark,
+  statusBarColor: Colors.transparent,
+  statusBarIconBrightness: Brightness.dark,
+  statusBarBrightness: Brightness.dark,
+);
+
+const SystemUiOverlayStyle darkSystemUi = SystemUiOverlayStyle(
+  systemNavigationBarColor: kBackgroundColorDark,
+  systemNavigationBarDividerColor: Colors.black,
+  statusBarColor: Colors.transparent,
+  systemNavigationBarIconBrightness: Brightness.light,
+  statusBarIconBrightness: Brightness.light,
+  statusBarBrightness: Brightness.light,
+);
 
 final ThemeData kThemeLight = _buildLightTheme();
 
