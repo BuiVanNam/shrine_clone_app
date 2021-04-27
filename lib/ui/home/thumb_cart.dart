@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:shrine_clone/model/home_model.dart';
 import 'package:shrine_clone/model/product.dart';
 import 'package:shrine_clone/utils/theme.dart';
@@ -39,74 +37,175 @@ class ThumbCart extends StatelessWidget {
   }
 }
 
-class ListThumbProduct extends StatelessWidget {
-  Widget _buildThumbProduct(Product product, int size) {
-    return Padding(
-      padding: const EdgeInsets.all(_marginItemProduct),
-      child: Column(
-        children: [
-          Expanded(
-              child: AspectRatio(
-            aspectRatio: 1,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.asset(
-                product.assetName,
-                package: Product.packageAsset,
-                fit: BoxFit.cover,
-              ),
-            ),
-          )),
-          Text(
-            'x$size',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-                fontWeight: FontWeight.w300, color: Colors.white, fontSize: 9),
-          ),
-        ],
-      ),
-    );
+class ListThumbProduct extends StatefulWidget {
+  @override
+  _ListThumbProductState createState() => _ListThumbProductState();
+}
+
+class _ListThumbProductState extends State<ListThumbProduct> {
+  final GlobalKey<AnimatedListState> _globalKeyAnimList = GlobalKey();
+  final Set<int> listCart = <int>{};
+
+  void _diffListCart(bool isChangeCount) {
+    HomeModel model = Provider.of<HomeModel>(context, listen: false);
+    Map<int, int> productInCartModel = model.productsInCart;
+    Set<int> listProductInCartModel = productInCartModel.keys.toSet();
+
+    final dif = listProductInCartModel.difference(listCart);
+    if (dif.isEmpty) {
+      print('_diffListCart return');
+      return;
+    }
+
+    for (final key in dif) {
+      if (listProductInCartModel.length > listCart.length) {
+        print('_diffListCart add key: $key');
+        listCart.add(key);
+        if (isChangeCount) {
+          _globalKeyAnimList.currentState!.insertItem(listCart.length - 1);
+        }
+      } else {}
+    }
+  }
+
+  int _sizeList() {
+    int sizeItemList = listCart.length;
+    return (sizeItemList <= _maxItemThumb) ? sizeItemList : 4;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    Map<int, int> productInCart =
-        context.select<HomeModel, Map<int, int>>((value) {
-      return value.productsInCart;
-    });
+    // context.select<HomeModel, Map<int, int>>((value) {
+    //   return value.productsInCart;
+    // });
 
-    HomeModel model = Provider.of<HomeModel>(context);
-    int sizeItemList = productInCart.keys.length;
-    int sizeListBuilder = (sizeItemList <= _maxItemThumb) ? sizeItemList : 4;
+    HomeModel model = Provider.of<HomeModel>(context, listen: false);
 
-    return ListView.builder(
-      padding: EdgeInsets.zero,
-      shrinkWrap: true,
-      itemCount: sizeListBuilder,
-      scrollDirection: Axis.horizontal,
-      itemBuilder: (_, index) {
-        if (index <= 2) {
-          Product product =
-              model.getProductFromKey(productInCart.keys.toList()[index]);
-          return _buildThumbProduct(product, productInCart[product.id]!);
-        } else {
-          return Center(
-              child: Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10),
-            child: Text(
-              '+${sizeItemList - _maxItemThumb}',
-              maxLines: 1,
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                  fontSize: 14),
-            ),
-          ));
-        }
+    return Selector<HomeModel, Map<int, int>>(
+      builder: (context, data, child) {
+        _diffListCart(_sizeList() < 4);
+        return child!;
       },
+      child: AnimatedList(
+        key: _globalKeyAnimList,
+        padding: EdgeInsets.zero,
+        shrinkWrap: true,
+        initialItemCount: _sizeList(),
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (_, index, anim) {
+          if (index <= 2) {
+            Product product =
+                model.getProductFromKey(listCart.elementAt(index));
+            return _buildSizeTransition(anim, index);
+            // return _buildThumbProduct(
+            //     product, model.productsInCart[product.id]!, anim);
+          } else {
+            return Center(
+                child: Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: Text(
+                '+${listCart.length - _maxItemThumb}',
+                maxLines: 1,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                    fontSize: 14),
+              ),
+            ));
+          }
+        },
+      ),
+      selector: (buildContext, model) => model.productsInCart,
+    );
+
+    // return AnimatedList(
+    //   key: _globalKeyAnimList,
+    //   padding: EdgeInsets.zero,
+    //   shrinkWrap: true,
+    //   initialItemCount: _sizeList(),
+    //   scrollDirection: Axis.horizontal,
+    //   itemBuilder: (_, index, anim) {
+    //     if (index <= 2) {
+    //       Product product = model.getProductFromKey(listCart.elementAt(index));
+    //       return _buildSizeTransition(anim, index);
+    //       // return _buildThumbProduct(
+    //       //     product, model.productsInCart[product.id]!, anim);
+    //     } else {
+    //       return Center(
+    //           child: Padding(
+    //         padding: const EdgeInsets.only(left: 10, right: 10),
+    //         child: Text(
+    //           '+${listCart.length - _maxItemThumb}',
+    //           maxLines: 1,
+    //           textAlign: TextAlign.center,
+    //           overflow: TextOverflow.ellipsis,
+    //           style: const TextStyle(
+    //               fontWeight: FontWeight.w600,
+    //               color: Colors.white,
+    //               fontSize: 14),
+    //         ),
+    //       ));
+    //     }
+    //   },
+    // );
+  }
+
+  SizeTransition _buildSizeTransition(Animation<double> animation, int index) {
+    return SizeTransition(
+      sizeFactor: animation,
+      child: Card(
+        child: Text(
+          '${index}',
+          style: TextStyle(color: Colors.black87),
+        ),
+        color: Colors.white,
+      ),
+    );
+  }
+
+  Widget _buildThumbProduct(
+      Product product, int size, Animation<double> animation) {
+    return SizeTransition(
+      sizeFactor: animation,
+      child: Padding(
+          padding: const EdgeInsets.all(_marginItemProduct),
+          child: Column(
+            children: [
+              Expanded(
+                  child: AspectRatio(
+                aspectRatio: 1,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.asset(
+                    product.assetName,
+                    package: Product.packageAsset,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              )),
+              Text(
+                'x$size',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                    fontWeight: FontWeight.w300,
+                    color: Colors.white,
+                    fontSize: 9),
+              ),
+            ],
+          )),
     );
   }
 }
