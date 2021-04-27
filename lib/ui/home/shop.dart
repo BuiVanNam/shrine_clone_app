@@ -13,6 +13,8 @@ import 'cart_product.dart';
 const String routerListProduct = '/list_product';
 const String routerCartProduct = '/cart_product';
 
+const String tagHeroCarProduct = 'cart_product';
+
 class ShopPage extends StatefulWidget {
   @override
   _ShopPageState createState() => _ShopPageState();
@@ -55,20 +57,24 @@ class _ShopPageState extends State<ShopPage> {
             })
       ],
       child: WillPopScope(
-          child: Navigator(
-            key: _navigatorKey,
-            initialRoute: routerListProduct,
-            onGenerateRoute: _onGenerateRoute,
-          ),
+          child: HeroControllerScope(
+              controller: MaterialApp.createMaterialHeroController(),
+              child: Navigator(
+                key: _navigatorKey,
+                initialRoute: routerListProduct,
+                onGenerateRoute: _onGenerateRoute,
+              )),
           onWillPop: () async {
-            if (_navigatorKey.currentState!.canPop()) {
-              _navigatorKey.currentState!.pop();
+            if (_navigatorKey.currentState?.canPop() ?? false) {
+              _navigatorKey.currentState?.pop();
               return false;
             } else {}
             return true;
           }),
     );
   }
+
+  static const opacityCurve = const Interval(0.9, 1, curve: Curves.easeInQuart);
 
   Route? _onGenerateRoute(RouteSettings settings) {
     Widget? page;
@@ -77,8 +83,20 @@ class _ShopPageState extends State<ShopPage> {
         page = HomeListProductPage();
         break;
       case routerCartProduct:
-        page = CartProductPage();
-        break;
+        return PageRouteBuilder<void>(
+            transitionDuration: Duration(milliseconds: 300),
+            reverseTransitionDuration: Duration(milliseconds: 300),
+            pageBuilder: (BuildContext context, Animation<double> animation,
+                Animation<double> secondaryAnimation) {
+              return AnimatedBuilder(
+                  animation: animation,
+                  builder: (BuildContext context, Widget? child) {
+                    return Opacity(
+                      opacity: opacityCurve.transform(animation.value),
+                      child: CartProductPage(),
+                    );
+                  });
+            });
     }
     if (page == null) {
       return null;
@@ -115,9 +133,17 @@ class ProductsPage extends StatelessWidget {
         ListProductPage(),
         GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, routerCartProduct);
+            if (Provider.of<HomeModel>(context, listen: false)
+                .productsInCart
+                .isNotEmpty) {
+              Navigator.pushNamed(context, routerCartProduct);
+            }
           },
-          child: ThumbCart(),
+          child: Hero(
+            createRectTween: createRectTweenCenter,
+            tag: tagHeroCarProduct,
+            child: ThumbCart(),
+          ),
         )
       ],
     );

@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 
@@ -13,4 +14,8 @@ extension ContextExtensions on BuildContext {
     var format = NumberFormat.simpleCurrency(locale: locale.toString());
     return format.currencySymbol;
   }
+}
+
+RectTween createRectTweenCenter(Rect? begin, Rect? end) {
+  return MaterialRectCenterArcTween(begin: begin, end: end);
 }

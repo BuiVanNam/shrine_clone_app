@@ -27,10 +27,11 @@ class ThumbCart extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          Container(
+          Flexible(
+              child: Container(
             height: _sizeItemProduct,
             child: ListThumbProduct(),
-          )
+          ))
         ],
       ),
     );
@@ -62,7 +63,7 @@ class _ListThumbProductState extends State<ListThumbProduct> {
         print('_diffListCart add key: $key');
         listCart.add(key);
         if (isChangeCount) {
-          _globalKeyAnimList.currentState!.insertItem(listCart.length - 1,
+          _globalKeyAnimList.currentState?.insertItem(listCart.length - 1,
               duration: const Duration(milliseconds: 300));
         }
       } else {}
