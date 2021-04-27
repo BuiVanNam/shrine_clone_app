@@ -18,7 +18,6 @@ const kSecondaryTextColorLight = Color(0xFF757575);
 const kSecondaryTextColorDark = Colors.white60;
 
 
-//TODO: use with: AnnotatedRegion<SystemUiOverlayStyle>
 const SystemUiOverlayStyle lightSystemUi = SystemUiOverlayStyle(
   systemNavigationBarColor: kBackgroundColorLight,
   systemNavigationBarDividerColor: Colors.white,

@@ -25,6 +25,7 @@ class _ShopPageState extends State<ShopPage> {
 
   @override
   Widget build(BuildContext context) {
+    print('build: ShopPage');
 
     return MultiProvider(
       providers: [
@@ -95,18 +96,12 @@ class _ShopPageState extends State<ShopPage> {
   }
 }
 
-//TODO: check dark theme
-bool _darkModeEnabled = false;
-void _checkIfDarkModeEnabled(BuildContext context) {
-  final ThemeData theme = Theme.of(context);
-  theme.brightness == Brightness.dark
-      ? _darkModeEnabled = true
-      : _darkModeEnabled = false;
-}
-
 class HomeListProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    print('build: HomeListProductPage');
+
     return Scaffold(
       appBar: AppBar(
         brightness: Brightness.dark,
@@ -121,6 +116,9 @@ class HomeListProductPage extends StatelessWidget {
 class ProductsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    print('build: ProductsPage');
+
     return Stack(
       alignment: Alignment.bottomRight,
       children: [

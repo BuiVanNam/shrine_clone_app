@@ -9,6 +9,11 @@ extension ContextExtensions on BuildContext {
     return brightness == Brightness.dark;
   }
 
+  bool darkModeEnabled() {
+    final ThemeData theme = Theme.of(this);
+    return theme.brightness == Brightness.dark;
+  }
+
   String currency() {
     Locale locale = Localizations.localeOf(this);
     var format = NumberFormat.simpleCurrency(locale: locale.toString());
