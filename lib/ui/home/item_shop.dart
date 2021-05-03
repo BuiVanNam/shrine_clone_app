@@ -44,9 +44,7 @@ class ItemShop extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 fontWeight: FontWeight.w300,
-                color: context.isDarkTheme()
-                    ? kSecondaryTextColorDark
-                    : kSecondaryTextColorLight),
+                color: kSecondaryTextColorLight),
           )
         ],
       ),

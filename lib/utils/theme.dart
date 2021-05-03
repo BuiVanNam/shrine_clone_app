@@ -17,7 +17,6 @@ const kPrimaryTextColorDark = Colors.white;
 const kSecondaryTextColorLight = Color(0xFF757575);
 const kSecondaryTextColorDark = Colors.white60;
 
-
 const SystemUiOverlayStyle lightSystemUi = SystemUiOverlayStyle(
   systemNavigationBarColor: kBackgroundColorLight,
   systemNavigationBarDividerColor: Colors.white,
@@ -53,13 +52,15 @@ ThemeData _buildLightTheme() {
           selectionColor: kPrimaryRippleColor,
           selectionHandleColor: kAccentColor),
       textTheme: _buildTextTheme(base.textTheme, true),
+      appBarTheme:
+          AppBarTheme(textTheme: GoogleFonts.notoSansTextTheme()),
       textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(
         padding: MaterialStateProperty.all(EdgeInsets.fromLTRB(18, 10, 18, 10)),
         shape: MaterialStateProperty.all(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
-        textStyle:
-            MaterialStateProperty.all(TextStyle(fontWeight: FontWeight.bold)),
+        textStyle: MaterialStateProperty.all(
+            GoogleFonts.notoSans(fontWeight: FontWeight.bold)),
         overlayColor: MaterialStateProperty.all(kPrimaryRippleColor),
       )));
 }
@@ -81,13 +82,14 @@ ThemeData _buildDarkTheme() {
           selectionColor: kPrimaryRippleColor,
           selectionHandleColor: kAccentColor),
       textTheme: _buildTextTheme(base.textTheme, false),
+      appBarTheme: AppBarTheme(textTheme: GoogleFonts.notoSansTextTheme()),
       textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(
         padding: MaterialStateProperty.all(EdgeInsets.fromLTRB(18, 10, 18, 10)),
         shape: MaterialStateProperty.all(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
-        textStyle:
-            MaterialStateProperty.all(TextStyle(fontWeight: FontWeight.bold)),
+        textStyle: MaterialStateProperty.all(
+            GoogleFonts.notoSans(fontWeight: FontWeight.bold)),
         overlayColor: MaterialStateProperty.all(kPrimaryRippleColor),
       )));
 }

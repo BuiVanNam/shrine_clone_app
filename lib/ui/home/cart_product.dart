@@ -5,40 +5,24 @@ import 'package:shrine_clone/utils/extension.dart';
 class CartProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    ThemeData themeData = Theme.of(context);
+
     return Hero(
       createRectTween: createRectTweenCenter,
       tag: tagHeroCarProduct,
       child: Scaffold(
-          // appBar: AppBar(
-          //   backgroundColor: Colors.white,
-          //   brightness: Brightness.dark,
-          //   foregroundColor: Colors.white,
-          //   shadowColor: Colors.white,
-          //   elevation: 0,
-          // ),
-          // body: SafeArea(
-          //   child: Column(
-          //     children: [_buildHeader(), Divider()],
-          //   ),
-          // ),
-          ),
-    );
-  }
-
-  Widget _buildHeader() {
-    return SizedBox(
-      height: 56,
-      child: Row(
-        children: [
-          IconButton(
-            icon: Icon(Icons.close),
-            onPressed: () {},
-          ),
-          Text(
-            'Cart Product',
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
-          )
-        ],
+        appBar: AppBar(
+          elevation: 0,
+          brightness: Brightness.light,
+          backgroundColor: themeData.scaffoldBackgroundColor,
+          title: Text('Cart Product', style: TextStyle(color: themeData.textTheme.bodyText1!.color)),
+        ),
+        // body: SafeArea(
+        //   child: Column(
+        //     children: [Divider()],
+        //   ),
+        // ),
       ),
     );
   }

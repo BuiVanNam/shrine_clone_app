@@ -99,13 +99,15 @@ class _ShopPageState extends State<ShopPage> {
 class HomeListProductPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     print('build: HomeListProductPage');
 
     return Scaffold(
       appBar: AppBar(
         brightness: Brightness.dark,
-        title: const Text('Shop'),
+        title: const Text(
+          'Shop',
+          style: TextStyle(color: Colors.white, fontSize: 21),
+        ),
       ),
       body: ProductsPage(),
       drawer: DrawerPage(),
@@ -116,7 +118,6 @@ class HomeListProductPage extends StatelessWidget {
 class ProductsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     print('build: ProductsPage');
 
     return Stack(
