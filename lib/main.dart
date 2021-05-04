@@ -8,6 +8,7 @@ import 'package:shrine_clone/utils/extension.dart';
 const String routerLogin = '/login';
 const String routerHomeShop = '/home_shop';
 
+//TODO: write test
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
