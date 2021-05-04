@@ -107,7 +107,7 @@ class HomeListProductPage extends StatelessWidget {
         brightness: Brightness.dark,
         title: const Text(
           'Shop',
-          style: TextStyle(color: Colors.white, fontSize: 21),
+          style: const TextStyle(color: Colors.white, fontSize: 21),
         ),
       ),
       body: ProductsPage(),

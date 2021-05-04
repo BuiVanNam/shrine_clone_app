@@ -3,6 +3,7 @@ import 'package:shrine_clone/ui/home/shop.dart';
 import 'package:shrine_clone/utils/extension.dart';
 import 'package:shrine_clone/utils/theme.dart';
 import 'package:shrine_clone/ui/custom/dashed_line.dart';
+import 'package:shrine_clone/ui/cart/list_cart.dart';
 
 class CartProductPage extends StatelessWidget {
   @override
@@ -18,15 +19,7 @@ class CartProductPage extends StatelessWidget {
               const Divider(
                 height: 1,
               ),
-              Flexible(
-                  child: ListView.builder(
-                      itemCount: 2,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text('$index'),
-                          leading: Icon(Icons.animation),
-                        );
-                      })),
+              Flexible(child: ListCartProduct()),
               const SizedBox(
                 height: 36,
               ),
@@ -96,7 +89,7 @@ class OrderCart extends StatelessWidget {
             Flexible(
                 child: const Text(
               'ORDER CART',
-              style: TextStyle(
+              style: const TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 14,
                   color: Colors.white),
@@ -111,7 +104,7 @@ class OrderCart extends StatelessWidget {
             Flexible(
                 child: Text(
               '${context.currency()}12,456',
-              style: TextStyle(
+              style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 16,
                   color: Colors.white),

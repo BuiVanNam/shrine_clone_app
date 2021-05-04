@@ -1,9 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shrine_clone/main.dart';
-import 'package:shrine_clone/utils/extension.dart';
 import 'package:shrine_clone/utils/shared_preferences.dart';
 import 'package:shrine_clone/utils/theme.dart';
 

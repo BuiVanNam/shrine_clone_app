@@ -44,7 +44,7 @@ class DrawerPage extends StatelessWidget {
       selected: currentCategory == category,
       title: Text(
         '$title',
-        style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
       ),
       onTap: () {
         Navigator.pop(context);
