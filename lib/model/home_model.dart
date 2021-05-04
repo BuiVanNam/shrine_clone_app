@@ -23,12 +23,33 @@ class HomeModel extends foundation.ChangeNotifier {
     });
   }
 
+  double getTotalPriceInCart() {
+    return _productInCart.keys.fold(0, (previousValue, element) {
+      int size = _productInCart[element] ?? 0;
+      return getProductFromKey(element).price * size + previousValue;
+    });
+  }
+
   void addProductInCart(Product product) {
     int key = product.id;
     if (_productInCart.containsKey(key)) {
       _productInCart.update(key, (value) => value + 1);
     } else {
       _productInCart[key] = 1;
+    }
+    notifyListeners();
+  }
+
+  void removeProductInCart(Product product) {
+    int key = product.id;
+    if (_productInCart.containsKey(key)) {
+      if (_productInCart[key] == 1) {
+        _productInCart.remove(key);
+      } else {
+        _productInCart.update(key, (value) => value - 1);
+      }
+    } else {
+      return;
     }
     notifyListeners();
   }

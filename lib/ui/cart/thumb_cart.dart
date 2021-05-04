@@ -65,7 +65,9 @@ class _ListThumbProductState extends State<ListThumbProduct> {
           _globalKeyAnimList.currentState?.insertItem(listCart.length - 1,
               duration: const Duration(milliseconds: 300));
         }
-      } else {}
+      } else {
+        print('_diffListCart remove key: $key');
+      }
     }
   }
 
@@ -104,7 +106,7 @@ class _ListThumbProductState extends State<ListThumbProduct> {
           Product product = model.getProductFromKey(listCart.elementAt(index));
           return _buildAnimationItem(
               child: _buildThumbProduct(
-                  product, model.productsInCart[product.id]!),
+                  product, model.productsInCart[product.id] ?? 0),
               animation: anim);
         } else {
           return _buildAnimationItem(

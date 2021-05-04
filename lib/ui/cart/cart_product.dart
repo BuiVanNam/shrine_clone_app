@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:shrine_clone/model/home_model.dart';
 import 'package:shrine_clone/ui/home/shop.dart';
 import 'package:shrine_clone/utils/extension.dart';
 import 'package:shrine_clone/utils/theme.dart';
 import 'package:shrine_clone/ui/custom/dashed_line.dart';
 import 'package:shrine_clone/ui/cart/list_cart.dart';
+import 'package:provider/provider.dart';
 
 class CartProductPage extends StatelessWidget {
   @override
@@ -71,6 +73,10 @@ class OrderCart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double priceTotal = context.select<HomeModel, double>((value) {
+      return value.getTotalPriceInCart();
+    });
+
     return Card(
       color: kAccentColor,
       shape: RoundedRectangleBorder(
@@ -103,7 +109,7 @@ class OrderCart extends StatelessWidget {
             sizeBoxMain,
             Flexible(
                 child: Text(
-              '${context.currency()}12,456',
+              '${context.currency()}$priceTotal',
               style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 16,

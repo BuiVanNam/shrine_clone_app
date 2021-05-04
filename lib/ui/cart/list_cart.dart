@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shrine_clone/model/home_model.dart';
@@ -39,6 +40,21 @@ class ItemCartProduct extends StatelessWidget {
   final Map<Product, int> productMap;
 
   const ItemCartProduct({Key? key, required this.productMap}) : super(key: key);
+
+  Widget _buildActionItem(IconData icon, VoidCallback callBack) {
+    return InkWell(
+      customBorder: const CircleBorder(),
+      splashColor: kPrimaryRippleColor,
+      child: Icon(
+        icon,
+        size: 20,
+        color: kSecondaryTextColorLight,
+      ),
+      onTap: () {
+        callBack();
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,18 +115,10 @@ class ItemCartProduct extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              InkWell(
-                customBorder: const CircleBorder(),
-                splashColor: kPrimaryRippleColor,
-                child: Icon(
-                  Icons.add,
-                  size: 20,
-                  color: kSecondaryTextColorLight,
-                ),
-                onTap: () {
-
-                },
-              ),
+              _buildActionItem(Icons.add, () {
+                Provider.of<HomeModel>(context, listen: false)
+                    .addProductInCart(product);
+              }),
               const SizedBox(
                 height: 10,
               ),
@@ -132,13 +140,10 @@ class ItemCartProduct extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              InkWell(
-                child: Icon(
-                  Icons.remove,
-                  size: 20,
-                  color: kSecondaryTextColorLight,
-                ),
-              ),
+              _buildActionItem(Icons.remove, () {
+                Provider.of<HomeModel>(context, listen: false)
+                    .removeProductInCart(product);
+              }),
             ],
           )
         ],
