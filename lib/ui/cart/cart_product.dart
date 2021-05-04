@@ -21,11 +21,11 @@ class CartProductPage extends StatelessWidget {
               const Divider(
                 height: 1,
               ),
-              Flexible(child: ListCartProduct()),
+              Flexible(child: ListCartProduct(), flex: 10,),
               const SizedBox(
                 height: 36,
               ),
-              OrderCart(),
+              Flexible(child: OrderCart(),),
               const SizedBox(
                 height: 36,
               ),

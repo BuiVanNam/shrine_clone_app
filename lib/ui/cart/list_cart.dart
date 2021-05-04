@@ -66,7 +66,7 @@ class ItemCartProduct extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          ClipRRect(
+          Expanded(child: ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Image.asset(
               product.assetName,
@@ -75,7 +75,7 @@ class ItemCartProduct extends StatelessWidget {
               width: 100,
               height: 100,
             ),
-          ),
+          )),
           const SizedBox(
             width: 10,
           ),
