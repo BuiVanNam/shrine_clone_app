@@ -6,9 +6,9 @@ import 'package:shrine_clone/model/products_repository.dart';
 import 'package:shrine_clone/ui/home/drawer_menu.dart';
 import 'package:shrine_clone/ui/home/list_home.dart';
 import 'package:shrine_clone/utils/extension.dart';
-import 'package:shrine_clone/utils/theme.dart';
-import 'thumb_cart.dart';
-import 'cart_product.dart';
+
+import '../cart/cart_product.dart';
+import '../cart/thumb_cart.dart';
 
 const String routerListProduct = '/list_product';
 const String routerCartProduct = '/cart_product';
@@ -79,9 +79,10 @@ class _ShopPageState extends State<ShopPage> {
                   builder: (BuildContext context, Widget? child) {
                     return Opacity(
                       opacity: opacityCurve.transform(animation.value),
-                      child: CartProductPage(),
+                      child: child,
                     );
-                  });
+                  },
+                  child: CartProductPage());
             });
     }
     if (page == null) {
