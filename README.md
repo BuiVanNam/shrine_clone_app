@@ -1,16 +1,54 @@
-# shrine_clone
+# Shrine app
 
-shrine_clone
+This project is a Flutter application, demo small shop UI and use [Provider](https://pub.dev/packages/provider) to state management.
+Project base on UI of [Shrine App](https://gallery.flutter.dev/#/shrine) from Gallery flutter project
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- Login, logout
+- Change category
+- Add product in cart
+- Update cart product
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+![alt text](https://github.com/BuiVanNam/shrine_clone_app/blob/master/screenshot/login.png)
+![alt text](https://github.com/BuiVanNam/shrine_clone_app/blob/master/screenshot/home_light.png)
+![alt text](https://github.com/BuiVanNam/shrine_clone_app/blob/master/screenshot/cart.png)
+![alt text](https://github.com/BuiVanNam/shrine_clone_app/blob/master/screenshot/home_dark.png)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/BuiVanNam/shrine_clone_app.git
+```
+
+Change directory:
+```bash
+cd shrine_clone_app
+```
+
+Install dependencies:
+```bash
+flutter pub get
+```
+
+Run the app:
+```bash
+flutter run
+```
+or run release
+```bash
+flutter run --release
+```
+
+## Package
+
+- [Provider](https://pub.dev/packages/provider)
+- [intl](https://pub.dev/packages/intl)
+- [shrine_images](https://pub.dev/packages/shrine_images)
+- [google_fonts](https://pub.dev/packages/google_fonts)
+- [flutter_staggered_grid_view](https://pub.dev/packages/flutter_staggered_grid_view)
+- [shared_preferences](https://pub.dev/packages/shared_preferences)
